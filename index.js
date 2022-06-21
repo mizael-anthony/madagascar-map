@@ -2,7 +2,7 @@ const express = require('express')
 const axios = require('axios')
 const cors = require('cors')
 
-const NOMINATUM = "https://nominatim.openstreetmap.org/search.php?q=analamanga&polygon_geojson=1&format=jsonv2"
+const NOMINATUM = "https://nominatim.openstreetmap.org/search.php?city=Tsaralalana&country=Madagascar&polygon_geojson=1&format=jsonv2"
 const PORT = process.env.PORT || 5001
 const app = express()
 
@@ -15,8 +15,9 @@ app.use(cors())
 
 app.get('/api.mapgasy/:quarter_name', (req, res)=>{
     let { quarter_name } = req.params
+    let country = "Madagascar"
     let quarter_list = []
-    axios.get(`https://nominatim.openstreetmap.org/search.php?q=${quarter_name}&polygon_geojson=1&format=jsonv2`)
+    axios.get(`https://nominatim.openstreetmap.org/search.php?city=${quarter_name}&country=${country}&polygon_geojson=1&format=jsonv2`)
         .then(result => {
             result.data.forEach(element => {
                 let data = element.display_name
