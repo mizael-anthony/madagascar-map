@@ -20,14 +20,20 @@ app.get('/api.mapgasy/:quarter_name', (req, res)=>{
     axios.get(`https://nominatim.openstreetmap.org/search.php?city=${quarter_name}&country=${country}&polygon_geojson=1&format=jsonv2`)
         .then(result => {
             result.data.forEach(element => {
-                let data = element.display_name
+                let place = element.display_name
 
                 // Conversion en tableau
-                data = data.split(',')
+                place = place.split(',')
 
                 // Vérifier la taille du tableau pour avoir les bons données
-                if(data.length < 7 && data.length > 4){
-                    let [quartier, ville, region, province] = data
+                if(place.length >= 4){
+                    let [quartier, ville, region, province] = place
+                    
+                    // Supprimer tous les espaces
+                    province = province.trim()
+                    region = region.trim()
+                    ville = ville.trim()
+                    quartier = quartier.trim()
     
                     quarter_list.push({
                         province,
