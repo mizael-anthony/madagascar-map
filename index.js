@@ -23,7 +23,7 @@ app.get('/api.mapgasy/:quarter_name', (req, res)=>{
         lines.forEach(line => {
             let place = line.replace(/['"]+/g, '').split(";")
 
-            if(place[1] == quarter_name){
+            if(place[1].includes(quarter_name)){
                 let [id, quartier, commune, district, region, province] = place
                 quarter_list.push({
                     id,
@@ -38,7 +38,12 @@ app.get('/api.mapgasy/:quarter_name', (req, res)=>{
 
         // console.log(quarter_list)
 
-        res.json(quarter_list)
+        if(quarter_list.length != 0){
+            res.json(quarter_list)
+        }
+        else{
+            res.status(404).json({"détail":"Veuillez saisir un endroit qui existe ."})
+        }
 
 
 
@@ -60,7 +65,7 @@ app.get('/api.mapgasy/:quarter_name', (req, res)=>{
  * @description Récupérer Lieux dans le monde entier Via Nominatim
  */
 
-app.get('/api.mapgasy.partout/:quarter_name', (req, res)=>{
+app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
     let { quarter_name } = req.params
     let country = "Madagascar"
     let quarter_list = []
