@@ -36,7 +36,6 @@ app.get('/api.mapgasy/:quarter_name', (req, res)=>{
             }
         })
 
-        // console.log(quarter_list)
 
         if(quarter_list.length != 0){
             res.json(quarter_list)
