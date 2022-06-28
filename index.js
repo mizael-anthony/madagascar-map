@@ -10,15 +10,19 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-app.get('/api.mapgasy/:quarter_name', (req, res)=>{
+/**
+ * @description Api jules
+ */
+
+app.get('/api.mapgasy.jule/:quarter_name', (req, res)=>{
     let { quarter_name } = req.params
+    let quarter_list = []
     try{
         const file = fs.readFileSync('data/data.csv', 'utf-8')
 
         // Split via Regex
         const lines = file.split(/\r?\n/)
 
-        let quarter_list = []
 
         lines.forEach(line => {
             let place = line.replace(/['"]+/g, '').split(";")
@@ -41,7 +45,7 @@ app.get('/api.mapgasy/:quarter_name', (req, res)=>{
             res.json(quarter_list)
         }
         else{
-            res.status(404).json({"détail":"Veuillez saisir un endroit qui existe ."})
+            res.json({"détail":"Veuillez saisir un endroit qui existe ."})
         }
 
 
@@ -59,14 +63,53 @@ app.get('/api.mapgasy/:quarter_name', (req, res)=>{
 })
 
 
+/**
+ * @description Récupérer Lieux dans le monde entier Via Nominatim
+ */
+ app.get('/api.mapgasy.geo/:quarter_name', (req, res)=>{
+    let { quarter_name } = req.params
+    let country = "Madagascar"
+    if (quarter_name.length < 4) return res.json({ "détail": "Veuillez saisir 4 caractères au minimum." })
+
+    let quarter_list = []
+    axios.get(`https://nominatim.openstreetmap.org/search.php?city=${quarter_name}&country=${country}&polygon_geojson=1&format=jsonv2`)
+        .then(result => {
+            result.data.forEach(element => {
+                let adresse = element.display_name
+                let latitude = element.lat
+                let longitude = element.lon
+
+                quarter_list.push({
+                    adresse,
+                    latitude,
+                    longitude,                    
+                })
+                
+            });
+        })
+        .then(result => {
+            if(quarter_list.length != 0){
+                res.json(quarter_list)
+            }
+            else{
+                res.json({"détail":"Veuillez saisir un endroit qui existe ."})
+            }
+        })
+        .catch(error => console.log(error))
+
+
+})
+
+
 
 /**
  * @description Récupérer Lieux dans le monde entier Via Nominatim
  */
-
 app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
     let { quarter_name } = req.params
     let country = "Madagascar"
+    if (quarter_name.length < 4) return res.json({ "détail": "Veuillez saisir 4 caractères au minimum." })
+
     let quarter_list = []
     axios.get(`https://nominatim.openstreetmap.org/search.php?city=${quarter_name}&country=${country}&polygon_geojson=1&format=jsonv2`)
         .then(result => {
@@ -77,7 +120,7 @@ app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
                 place = place.split(',')
 
                 // Vérifier la taille du tableau pour avoir les bons données
-                if(place.length >= 4){
+                if(place.length === 6){
                     let [quartier, commune, region, province] = place
                     
                     // Supprimer tous les espaces
@@ -102,7 +145,7 @@ app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
                 res.json(quarter_list)
             }
             else{
-                res.status(404).json({"détail":"Veuillez saisir un endroit qui existe ."})
+                res.json({"détail":"Veuillez saisir un endroit qui existe ."})
             }
         })
         .catch(error => console.log(error))
