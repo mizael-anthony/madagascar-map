@@ -72,7 +72,7 @@ app.get('/api.mapgasy.file/:quarter_name', (req, res)=>{
     if (quarter_name.length < 4) return res.status(404).json({ "détail": "Veuillez saisir 4 caractères au minimum." })
 
     let quarter_list = []
-    axios.get(`https://nominatim.openstreetmap.org/search.php?city=${quarter_name}&country=${country}&polygon_geojson=1&format=jsonv2`)
+    axios.get(`https://nominatim.openstreetmap.org/search.php?q=${quarter_name}&polygon_geojson=1&format=jsonv2`)
         .then(result => {
             result.data.forEach(element => {
                 // Récupération adresse quartier, commune, region, province en une seule ligne
@@ -111,7 +111,7 @@ app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
     if (quarter_name.length < 4) return res.status(404).json({ "détail": "Veuillez saisir 4 caractères au minimum." })
 
     let quarter_list = []
-    axios.get(`https://nominatim.openstreetmap.org/search.php?city=${quarter_name}&country=${country}&polygon_geojson=1&format=jsonv2`)
+    axios.get(`https://nominatim.openstreetmap.org/search.php?q=${quarter_name}&polygon_geojson=1&format=jsonv2`)
         .then(result => {
             result.data.forEach(element => {
                 let place = element.display_name
