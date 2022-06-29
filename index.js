@@ -120,7 +120,7 @@ app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
                 place = place.split(',')
 
                 // Vérifier la taille du tableau pour avoir les bons données
-                if(place.length <= 6){
+                if(place.length >= 6){
                     let [quartier, commune, region, province] = place
                     
                     // Supprimer tous les espaces
