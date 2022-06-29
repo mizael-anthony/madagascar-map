@@ -115,12 +115,13 @@ app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
         .then(result => {
             result.data.forEach(element => {
                 let place = element.display_name
+                let type = element.type
 
                 // Conversion en tableau
                 place = place.split(',')
 
                 // Vérifier la taille du tableau pour avoir les bons données
-                if(place.length === 6){
+                if(place.length === 6 && type === "suburb"){
                     let [quartier, commune, region, province] = place
                     
                     // Supprimer tous les espaces
