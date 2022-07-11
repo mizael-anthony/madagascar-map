@@ -121,6 +121,8 @@ app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
 
                 // Conversion en tableau
                 place = place.split(',')
+                latitude = parseFloat(latitude)
+                longitude = parseFloat(longitude)
 
                 // Vérifier la taille du tableau pour avoir les bons données
                 if(place.length === 6 && type === "suburb"){
