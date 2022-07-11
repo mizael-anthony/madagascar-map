@@ -116,6 +116,8 @@ app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
             result.data.forEach(element => {
                 let place = element.display_name
                 let type = element.type
+                let latitude = element.lat
+                let longitude = element.lon
 
                 // Conversion en tableau
                 place = place.split(',')
@@ -131,6 +133,8 @@ app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
                     quartier = quartier.trim()
     
                     quarter_list.push({
+                        latitude,
+                        longitude,
                         province,
                         region,
                         commune,
