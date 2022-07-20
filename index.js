@@ -108,7 +108,7 @@ app.get('/api.mapgasy.file/:quarter_name', (req, res)=>{
 app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
     let { quarter_name } = req.params
     let country = "Madagascar"
-    if (quarter_name.length < 4) return res.status(404).json({ "détail": "Veuillez saisir 4 caractères au minimum." })
+    if (quarter_name.length < 4) return res.status(400).json({ "détail": "Veuillez saisir 4 caractères au minimum." })
 
     let quarter_list = []
     axios.get(`https://nominatim.openstreetmap.org/search.php?q=${quarter_name}&polygon_geojson=1&format=jsonv2`)
@@ -151,7 +151,7 @@ app.get('/api.mapgasy.nominatum/:quarter_name', (req, res)=>{
                 res.json(quarter_list)
             }
             else{
-                res.status(404).json({"détail":"Veuillez saisir un endroit qui existe ."})
+                res.status(400).json({"détail":"Veuillez saisir un endroit qui existe ."})
             }
         })
         .catch(error => console.log(error))
