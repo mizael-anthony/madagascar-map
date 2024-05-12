@@ -4,16 +4,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIDE</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css"> -->
+
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>  -->
+    
+    <title>Geo Map</title>
 </head>
 <body>
-    <fieldset>
-        <legend>Inscription</legend>
-        <label for="Nom et Prénoms">Nom et Prénoms</label>
-        <input type="text" name="nom_prenoms" id="nom_prenoms">
-        <label for="ELO FIDE">ELO FIDE</label>
-        <input type="text" name="elo_fide" id="elo_fide" disabled>
-    </fieldset>
-    <script src="script.js"></script>
+
+    <div id="map"></div>
+
+    <!-- <script src="node_modules/leaflet/dist/leaflet.js"></script>
+    <script src="node_modules/@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.min.js"></script> -->
+
+
+    <script type="module" src="app.js"></script>
+    
 </body>
 </html>
